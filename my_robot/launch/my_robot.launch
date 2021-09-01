@@ -1,0 +1,28 @@
+<launch>
+  <param command="$(find xacro)/xacro $(find my_robot)/robot/urdf/my_robot.xacro" name="robot_description"/>
+ 
+  <!--change the above-->
+
+  <!--Spawn my_robot in Gazebo-->
+  <node args="-param robot_description -urdf -model my_robot -z 0.2" name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"/>
+ 
+  <!--Publish robot states/ transforms-->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+
+
+  <!--Launch mobile base controller node -->
+  <rosparam file="$(find my_robot)/config/diff_drive.yaml" command="load" />
+    
+    <node name="robot_controller_manager" pkg="controller_manager" type="spawner"
+          respawn="false" output="screen" args="mobile_base_controller joint_state_controller"/>
+          
+
+  <!--Set Gazebo parameters and launch the world-->
+  <include file="$(find my_robot)/launch/my_world.launch">
+</include>
+
+  <!-- Launch Rviz -->
+
+<node type="rviz" name="rviz" pkg="rviz" args="-d $(find my_robot)/rviz/my_robot.rviz" />
+</launch>

@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find my_robot)/robot/urdf/materials.xacro" />
+<xacro:include filename="$(find my_robot)/robot/urdf/my_robot.trans" />
+<xacro:include filename="$(find my_robot)/robot/urdf/my_robot.gazebo" />
+<link name="base_link">
+  <inertial>
+    
+    <mass value="100.0"/>
+    <inertia ixx="0.05" ixy="0" ixz="0" iyy="0.05" iyz="0.0" izz="0.05"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="left_wheel_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="2.544782153543479e-07 -0.009958178871430495 4.6708752726720704e-08"/>
+    <mass value="40"/>
+    <inertia ixx="6e-06" ixy="-0.0" ixz="-0.0" iyy="9e-06" iyz="0.0" izz="6e-06"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.02055 -0.062976 -0.027682"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.02055 -0.062976 -0.027682"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="right_wheel_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="2.544782172382576e-07 -0.009958178871433444 4.6708753670410275e-08"/>
+    <mass value="40"/>
+    <inertia ixx="6e-06" ixy="-0.0" ixz="0.0" iyy="9e-06" iyz="-0.0" izz="6e-06"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.02055 0.057024 -0.027682"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.02055 0.057024 -0.027682"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="castor_wheel_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="6.56627530126741e-13 1.3790065032416587e-07 -0.0037499532912473946"/>
+    <mass value="0.016441001553786583"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="1e-06"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.07 0.007024 -0.022682"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/castor_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.07 0.007024 -0.022682"/>
+    <geometry>
+      <mesh filename="package://my_robot/robot/meshes/castor_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- Hokuyo Laser -->
+  <link name="hokuyo">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://my_robot/robot/meshes/hokuyo.dae"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <!-- rplidar Laser -->
+  <!-- <link name="laser">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707 0 1.5708"/>
+      <geometry>
+        <mesh filename="package://my_robot/robot/meshes/rplidar.dae" scale="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707 0 1.5708"/>
+      <geometry>
+        <mesh filename="package://my_robot/robot/meshes/rplidar.dae" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+      <inertial>
+    <origin rpy="0 0 0" xyz="6.56627530126741e-13 1.3790065032416587e-07 -0.0037499532912473946"/>
+    <mass value="0.016441001553786583"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="1e-06"/>
+  </inertial>
+</link> -->
+
+
+
+<joint name="left_wheel_joint" type="continuous">
+
+  <origin rpy="0 0 0" xyz="-0.02055 0.057024 0.027682"/>
+  <parent link="base_link"/>
+  <child link="left_wheel_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="right_wheel_joint" type="continuous">
+
+  <origin rpy="0 0 0" xyz="-0.02055 -0.057024 0.027682"/>
+  <parent link="base_link"/>
+  <child link="right_wheel_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="castor_joint" type="fixed">
+  <origin rpy="0 0 0.1" xyz="0.07 -0.007024 0.022682"/>
+  <parent link="base_link"/>
+  <child link="castor_wheel_1"/>
+</joint>
+
+ <!-- <joint name="rplidar_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.02 0 0.078" rpy="0 0 3.14"/>
+    <parent link="base_link"/>
+    <child link="laser"/>
+  </joint>
+  -->
+
+  <joint name="hokuyo_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 .1" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="hokuyo"/>
+  </joint>
+
+
+
+</robot>
